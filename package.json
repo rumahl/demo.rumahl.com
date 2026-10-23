@@ -1,0 +1,9 @@
+{
+  "name": "demo.rumahl.com",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static rumahl OS demo deployment",
+  "scripts": {
+    "build": "echo 'static demo: output is committed'"
+  }
+}
