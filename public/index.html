@@ -58,12 +58,12 @@
         rgba(255, 255, 255, 0.025) 53%,
         rgba(255, 255, 255, 0) 70%
       );
-      opacity: 0;
+      opacity: 0.14;
       transform: translateZ(0) scale(0.92);
       will-change: opacity, transform;
-      /* Starts only after the one-shot R entrance has finished. The long
-         loading path never stretches or restarts this animation. */
-      animation: rumahl-splash-backlight 3.4s 1.15s ease-in-out infinite;
+      /* Starts with the splash so the compositor owns it before the shell
+         blocks the main thread. The pulse is independent of load duration. */
+      animation: rumahl-splash-backlight 3.4s ease-in-out infinite;
       z-index: -1;
     }
     #rumahl-splash .mark {
@@ -71,7 +71,6 @@
       height: 100%;
       display: block;
       overflow: visible;
-      filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.28));
     }
     #rumahl-splash .mark-path {
       fill: var(--splash-fg);
