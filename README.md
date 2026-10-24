@@ -15,6 +15,11 @@ Import this repository as a static project:
 `vercel.json` already sets those values, adds the `/apps/*` and `/widgets/*`
 rewrites, cache headers for hashed assets and the frame CSP for the demo host.
 
+The `/apps/*` and `/widgets/*` frames allow the demo to be embedded on the
+website (`rumahl.com`, `*.rumahl.com`) and on localhost. Add any other parent
+origin to `frame-ancestors` there, otherwise the nested app and widget frames
+are blocked by the browser.
+
 ## Rebuilding
 
 From a rumahl checkout:
