@@ -42,7 +42,8 @@
       aspect-ratio: 1;
       display: grid;
       place-items: center;
-      transform: translateY(-6px);
+      transform: translate3d(0, -6px, 0);
+      will-change: transform, opacity;
       animation: rumahl-splash-brand-enter 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
     #rumahl-splash .brand::before {
@@ -53,12 +54,12 @@
       background: radial-gradient(
         circle,
         rgba(255, 255, 255, 0.2) 0%,
-        rgba(255, 255, 255, 0.08) 34%,
+        rgba(255, 255, 255, 0.075) 32%,
+        rgba(255, 255, 255, 0.025) 53%,
         rgba(255, 255, 255, 0) 70%
       );
       opacity: 0;
-      filter: blur(18px);
-      transform: scale(0.92);
+      transform: translateZ(0) scale(0.92);
       will-change: opacity, transform;
       /* Starts only after the one-shot R entrance has finished. The long
          loading path never stretches or restarts this animation. */
@@ -74,10 +75,6 @@
     }
     #rumahl-splash .mark-path {
       fill: var(--splash-fg);
-      transform-box: fill-box;
-      transform-origin: center;
-      animation: rumahl-splash-mark-settle 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
-      will-change: transform;
     }
     #rumahl-splash .status {
       position: absolute;
@@ -100,11 +97,14 @@
     }
     #rumahl-splash .progress__fill {
       display: block;
-      width: 0;
+      width: 100%;
       height: 100%;
       border-radius: inherit;
       background: rgba(255, 255, 255, 0.82);
-      transition: width 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+      transform: scaleX(0);
+      transform-origin: left center;
+      will-change: transform;
+      transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
     }
     #rumahl-splash .label {
       color: var(--splash-muted);
@@ -124,18 +124,14 @@
       animation: rumahl-splash-status-out 0.35s ease forwards;
     }
     @keyframes rumahl-splash-brand-enter {
-      0% { opacity: 0; transform: translateY(6px) scale(0.93); filter: blur(8px); }
+      0% { opacity: 0; transform: translate3d(0, 6px, 0) scale(0.93); }
       55% { opacity: 1; }
-      100% { opacity: 1; transform: translateY(-6px) scale(1); filter: blur(0); }
-    }
-    @keyframes rumahl-splash-mark-settle {
-      0% { transform: scale(0.9); }
-      70% { transform: scale(1.018); }
-      100% { transform: scale(1); }
+      72% { transform: translate3d(0, -6px, 0) scale(1.012); }
+      100% { opacity: 1; transform: translate3d(0, -6px, 0) scale(1); }
     }
     @keyframes rumahl-splash-backlight {
-      0%, 100% { opacity: 0.16; transform: scale(0.9); }
-      50% { opacity: 0.58; transform: scale(1.08); }
+      0%, 100% { opacity: 0.16; transform: translateZ(0) scale(0.9); }
+      50% { opacity: 0.58; transform: translateZ(0) scale(1.08); }
     }
     @keyframes rumahl-splash-status-in {
       to { opacity: 1; }
@@ -144,14 +140,13 @@
       to { opacity: 0; transform: translate(-50%, 5px); }
     }
     @keyframes rumahl-splash-brand-exit {
-      to { opacity: 0; transform: translateY(-14px) scale(0.985); filter: blur(4px); }
+      to { opacity: 0; transform: translate3d(0, -14px, 0) scale(0.985); }
     }
     @keyframes rumahl-splash-out {
       to { opacity: 0; }
     }
     @media (prefers-reduced-motion: reduce) {
       #rumahl-splash .brand,
-      #rumahl-splash .mark-path,
       #rumahl-splash .brand::before,
       #rumahl-splash .status,
       #rumahl-splash.ready,
@@ -237,7 +232,7 @@
 
       function paint(next) {
         value = Math.max(0, Math.min(100, next));
-        if (bar) bar.style.width = `${value}%`;
+        if (bar) bar.style.transform = `scaleX(${value / 100})`;
         progress?.setAttribute("aria-valuenow", String(Math.round(value)));
       }
 
