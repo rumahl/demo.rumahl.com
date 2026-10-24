@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <title>rumahl OS Demo</title>
-    <script type="module" crossorigin src="/assets/demo-L3up-715.js"></script>
+    <script type="module" crossorigin src="/assets/demo-QPAlCqS8.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/demo-DNYC7uuk.css">
   <meta name="rumahl-shell" content="1" /><style>
     html.rumahl-splashing {
@@ -48,12 +48,21 @@
     #rumahl-splash .brand::before {
       content: "";
       position: absolute;
-      inset: -42%;
+      inset: -58%;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0) 67%);
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.08) 34%,
+        rgba(255, 255, 255, 0) 70%
+      );
       opacity: 0;
-      filter: blur(10px);
-      animation: rumahl-splash-breathe 2.8s 700ms ease-in-out infinite;
+      filter: blur(18px);
+      transform: scale(0.92);
+      will-change: opacity, transform;
+      /* Starts only after the one-shot R entrance has finished. The long
+         loading path never stretches or restarts this animation. */
+      animation: rumahl-splash-backlight 3.4s 1.15s ease-in-out infinite;
       z-index: -1;
     }
     #rumahl-splash .mark {
@@ -68,6 +77,7 @@
       transform-box: fill-box;
       transform-origin: center;
       animation: rumahl-splash-mark-settle 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+      will-change: transform;
     }
     #rumahl-splash .status {
       position: absolute;
@@ -123,9 +133,9 @@
       70% { transform: scale(1.018); }
       100% { transform: scale(1); }
     }
-    @keyframes rumahl-splash-breathe {
-      0%, 100% { opacity: 0.12; transform: scale(0.94); }
-      50% { opacity: 0.48; transform: scale(1.04); }
+    @keyframes rumahl-splash-backlight {
+      0%, 100% { opacity: 0.16; transform: scale(0.9); }
+      50% { opacity: 0.58; transform: scale(1.08); }
     }
     @keyframes rumahl-splash-status-in {
       to { opacity: 1; }
@@ -152,6 +162,10 @@
         transition: none !important;
       }
       #rumahl-splash .status { opacity: 1; }
+      #rumahl-splash .brand::before {
+        opacity: 0.24;
+        transform: none;
+      }
     }
   </style></head>
   <body>
