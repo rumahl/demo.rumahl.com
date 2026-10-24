@@ -6,11 +6,11 @@
   "outputDirectory": "public",
   "rewrites": [
     {
-      "source": "/apps/:path*",
+      "source": "/apps/(.*)",
       "destination": "/demo-widget.html"
     },
     {
-      "source": "/widgets/:path*",
+      "source": "/widgets/(.*)",
       "destination": "/demo-widget.html"
     }
   ],
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "source": "/apps/:path*",
+      "source": "/apps/(.*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "source": "/widgets/:path*",
+      "source": "/widgets/(.*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
