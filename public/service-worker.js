@@ -1,7 +1,7 @@
 /* Static demo service worker. It keeps only public demo assets and never
    intercepts API calls or other origins. VERSION is replaced at build time so
    every deployment gets a fresh cache and the normal waiting-worker flow. */
-const VERSION = "demo-1792880216826";
+const VERSION = "demo-1792927777254";
 const CACHE = `rumahl-demo-${VERSION}`;
 const CORE = ["/", "/index.html", "/manifest.webmanifest", "/icon.svg", "/icon-512.png"];
 
