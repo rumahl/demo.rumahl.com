@@ -1,0 +1,82 @@
+name: Build and publish rumahl OS demo
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rumahl-demo-publish
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout demo deployment repository
+        uses: actions/checkout@v4
+        with:
+          path: demo
+          persist-credentials: true
+
+      - name: Checkout rumahl OS (main)
+        uses: actions/checkout@v4
+        with:
+          repository: rumahl/rumahl
+          ref: main
+          path: source
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+          run_install: false
+
+      - name: Install frontend dependencies
+        run: pnpm --dir source/frontend install --frozen-lockfile
+
+      - name: Build static demo
+        run: pnpm --dir source/frontend/packages/shell build:demo
+
+      - name: Verify build artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s source/frontend/packages/shell/dist-demo/demo.html
+          test -s source/frontend/packages/shell/dist-demo/demo-widget.html
+          test -s source/frontend/packages/shell/dist-demo/404.html
+
+      - name: Synchronize generated demo files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p demo/public
+          rsync -a --delete \
+            source/frontend/packages/shell/dist-demo/ \
+            demo/public/
+          rm -rf demo/public/.vite
+
+      - name: Commit and push demo assets
+        shell: bash
+        working-directory: demo
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A -- public/
+          if git diff --cached --quiet; then
+            echo 'No changes to publish.'
+            exit 0
+          fi
+          source_sha="$(git -C ../source rev-parse --short=12 HEAD)"
+          git commit -s -m "build(demo): sync rumahl OS demo from ${source_sha}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
