@@ -51,9 +51,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -s source/frontend/packages/shell/dist-demo/demo.html
+      
+          test -s source/frontend/packages/shell/dist-demo/index.html
           test -s source/frontend/packages/shell/dist-demo/demo-widget.html
           test -s source/frontend/packages/shell/dist-demo/404.html
+          test -s source/frontend/packages/shell/dist-demo/service-worker.js
+      
+          echo "All demo build artifacts verified successfully."
 
       - name: Synchronize generated demo files
         shell: bash
