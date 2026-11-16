@@ -15,14 +15,14 @@
     <meta name="apple-mobile-web-app-title" content="rumahl" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="apple-touch-icon" href="/icon-512.png" />
-    <script type="module" crossorigin src="/assets/demo-BvPPysX1.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/demo-C0kzA0ze.css">
+    <script type="module" crossorigin src="/assets/demo-dklWS9BP.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/demo-jCQ6k5hk.css">
   <meta name="rumahl-shell" content="1" /><style>
     html.rumahl-splashing {
       color-scheme: dark;
       --splash-bg: #050505;
       --splash-fg: #ffffff;
-      --splash-muted: rgba(255, 255, 255, 0.42);
+      --splash-muted: rgba(255, 255, 255, 0.48);
       --splash-soft: rgba(255, 255, 255, 0.12);
     }
     html.rumahl-splashing,
@@ -36,7 +36,7 @@
     #rumahl-splash {
       --splash-bg: #050505;
       --splash-fg: #ffffff;
-      --splash-muted: rgba(255, 255, 255, 0.42);
+      --splash-muted: rgba(255, 255, 255, 0.48);
       --splash-soft: rgba(255, 255, 255, 0.12);
       position: fixed;
       inset: 0;
@@ -177,10 +177,10 @@
       </svg>
     </div>
     <div class="status" aria-live="polite">
-      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progress" role="progressbar" aria-labelledby="rumahl-splash-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <i class="progress__fill"></i>
       </div>
-      <div class="label">rumahl OS</div>
+      <div class="label" id="rumahl-splash-label">rumahl OS</div>
     </div>
   </main>
   <script>
